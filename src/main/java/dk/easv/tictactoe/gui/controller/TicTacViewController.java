@@ -24,13 +24,22 @@ import javafx.scene.shape.Line;
 public class TicTacViewController implements Initializable
 {
     @FXML
-    public Line line1Row;
+    private Line line1Row;
 
     @FXML
-    public Line line2Row;
+    private Line line2Row;
 
     @FXML
-    public Line line3Row;
+    private Line line3Row;
+
+    @FXML
+    private Line lineV1Column;
+
+    @FXML
+    private Line lineV2Column;
+
+    @FXML
+    private Line lineV3Column;
 
     @FXML
     private Label lblPlayer;
@@ -143,6 +152,9 @@ public class TicTacViewController implements Initializable
         case "ROW_0": line1Row.setVisible(true); break;
         case "ROW_1": line2Row.setVisible(true); break;
         case "ROW_2": line3Row.setVisible(true); break;
+        case "COL_0": lineV1Column.setVisible(true); break;
+        case "COL_1": lineV2Column.setVisible(true); break;
+        case "COL_2": lineV3Column.setVisible(true); break;
     }
     }
 
@@ -162,5 +174,8 @@ public class TicTacViewController implements Initializable
         if (line1Row != null) line1Row.setVisible(false);
         if (line2Row != null) line2Row.setVisible(false);
         if (line3Row != null) line3Row.setVisible(false);
+        if (lineV1Column != null) lineV1Column.setVisible(false);
+        if (lineV2Column != null) lineV2Column.setVisible(false);
+        if (lineV3Column != null) lineV3Column.setVisible(false);
     }
 }
