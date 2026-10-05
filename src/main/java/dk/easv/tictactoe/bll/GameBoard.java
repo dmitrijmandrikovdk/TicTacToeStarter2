@@ -10,6 +10,11 @@ public class GameBoard implements IGameBoard {
     private int winner;
     private int movesCount;
 
+    public String winningLineType = "";
+
+    public String getWinningLineType(){
+        return winningLineType;
+    }
     public GameBoard() {
         board = new int[3][3];
         newGame();
@@ -92,23 +97,27 @@ public class GameBoard implements IGameBoard {
         for (int c = 0; c < 3; c++) {
             if (board[c][0] != -1 && board[c][0] == board[c][1] && board[c][1] == board[c][2]) {
                 winner = board[c][0];
+                winningLineType = "COL_" + c;
                 return;
             }
         }
         for (int r = 0; r < 3; r++) {
             if (board[0][r] != -1 && board[0][r] == board[1][r] && board[1][r] == board[2][r]) {
                 winner = board[0][r];
+                winningLineType = "ROW_" + r;
                 return;
             }
         }
 
         if (board[0][0] != -1 && board[0][0] == board[1][1] && board[1][1] == board[2][2]) {
             winner = board[0][0];
+            winningLineType = "DIAG_MAIN";
             return;
         }
 
         if (board[0][2] != -1 && board[0][2] == board[1][1] && board[1][1] == board[2][0]) {
             winner = board[0][2];
+            winningLineType = "DIAG_SUB";
         }
     }
 }

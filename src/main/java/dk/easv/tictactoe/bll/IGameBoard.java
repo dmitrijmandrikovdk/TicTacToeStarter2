@@ -35,6 +35,7 @@ public interface IGameBoard
      */
     boolean isGameOver();
 
+    String getWinningLineType();
     /**
      * Gets the id of the winner, -1 if its a draw or if the game is still running.
      *

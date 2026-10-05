@@ -15,6 +15,7 @@ import javafx.scene.layout.GridPane;
 // Project imports
 import dk.easv.tictactoe.bll.GameBoard;
 import dk.easv.tictactoe.bll.IGameBoard;
+import javafx.scene.shape.Line;
 
 /**
  *
@@ -22,6 +23,15 @@ import dk.easv.tictactoe.bll.IGameBoard;
  */
 public class TicTacViewController implements Initializable
 {
+    @FXML
+    public Line line1Row;
+
+    @FXML
+    public Line line2Row;
+
+    @FXML
+    public Line line3Row;
+
     @FXML
     private Label lblPlayer;
 
@@ -123,9 +133,17 @@ public class TicTacViewController implements Initializable
             default:
                 String winnerSymbol = (winner == 0) ? "X" : "O";
                 message = "Player " + winnerSymbol + " wins!!!";
+                showWinningLine(game.getWinningLineType());
                 break;
         }
         lblPlayer.setText(message);
+    }
+    private void showWinningLine(String lineType){
+    switch (lineType){
+        case "ROW_0": line1Row.setVisible(true); break;
+        case "ROW_1": line2Row.setVisible(true); break;
+        case "ROW_2": line3Row.setVisible(true); break;
+    }
     }
 
     /**
@@ -135,8 +153,14 @@ public class TicTacViewController implements Initializable
     {
         for(Node n : gridPane.getChildren())
         {
-            Button btn = (Button) n;
-            btn.setText("");
+            //this thing (instanceof Button) checks wheter the element is a button, before working with it. Without it, lines would cause a ClassCastException.
+            if (n instanceof Button) {
+                Button btn = (Button) n;
+                btn.setText("");
+            }
         }
+        if (line1Row != null) line1Row.setVisible(false);
+        if (line2Row != null) line2Row.setVisible(false);
+        if (line3Row != null) line3Row.setVisible(false);
     }
 }
