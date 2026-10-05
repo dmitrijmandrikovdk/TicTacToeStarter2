@@ -1,0 +1,159 @@
+<html>
+<head>
+<title>GameBoard.java</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style type="text/css">
+.s0 { color: #cf8e6d;}
+.s1 { color: #bcbec4;}
+.s2 { color: #bcbec4;}
+.s3 { color: #5f826b; font-style: italic;}
+.s4 { color: #67a37c; font-style: italic;}
+.s5 { color: #2aacb8;}
+</style>
+</head>
+<body bgcolor="#191a1c">
+<table CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#606060" >
+<tr><td><center>
+<font face="Arial, Helvetica" color="#000000">
+GameBoard.java</font>
+</center></td></tr></table>
+<pre><span class="s0">package </span><span class="s1">dk</span><span class="s2">.</span><span class="s1">easv</span><span class="s2">.</span><span class="s1">tictactoe</span><span class="s2">.</span><span class="s1">bll</span><span class="s2">;</span>
+
+<span class="s3">/**</span>
+ <span class="s3">*</span>
+ <span class="s3">* </span><span class="s4">@author </span><span class="s3">EASV</span>
+ <span class="s3">*/</span>
+<span class="s0">public class </span><span class="s1">GameBoard </span><span class="s0">implements </span><span class="s1">IGameBoard</span>
+<span class="s2">{</span>
+    <span class="s0">private int</span><span class="s2">[][] </span><span class="s1">board</span><span class="s2">;</span>
+    <span class="s0">private int </span><span class="s1">currentPlayer</span><span class="s2">;</span>
+    <span class="s0">private int </span><span class="s1">winner</span><span class="s2">;</span>
+    <span class="s0">private int </span><span class="s1">movesCount</span><span class="s2">;</span>
+
+    <span class="s0">public </span><span class="s1">GameBoard</span><span class="s2">()</span>
+    <span class="s2">{</span>
+        <span class="s1">board </span><span class="s2">= </span><span class="s0">new int</span><span class="s2">[</span><span class="s5">3</span><span class="s2">][</span><span class="s5">3</span><span class="s2">];</span>
+        <span class="s1">newGame</span><span class="s2">();</span>
+    <span class="s2">}</span>
+
+    <span class="s3">/**</span>
+     <span class="s3">* Returns 0 for player 0, 1 for player 1.</span>
+     <span class="s3">*</span>
+     <span class="s3">* </span><span class="s4">@return </span><span class="s3">int Id of the next player.</span>
+     <span class="s3">*/</span>
+    <span class="s0">public int </span><span class="s1">getNextPlayer</span><span class="s2">()</span>
+    <span class="s2">{</span>
+        <span class="s0">return </span><span class="s1">currentPlayer</span><span class="s2">;</span>
+    <span class="s2">}</span>
+
+    <span class="s3">/**</span>
+     <span class="s3">* Attempts to let the current player play at the given coordinates. It the</span>
+     <span class="s3">* attempt is succesfull the current player has ended his turn and it is the</span>
+     <span class="s3">* next players turn.</span>
+     <span class="s3">*</span>
+     <span class="s3">* </span><span class="s4">@param </span><span class="s3">col column to place a marker in.</span>
+     <span class="s3">* </span><span class="s4">@param </span><span class="s3">row row to place a marker in.</span>
+     <span class="s3">* </span><span class="s4">@return </span><span class="s3">true if the move is accepted, otherwise false. If gameOver == true</span>
+     <span class="s3">* this method will always return false.</span>
+     <span class="s3">*/</span>
+    <span class="s0">public boolean </span><span class="s1">play</span><span class="s2">(</span><span class="s0">int </span><span class="s1">col</span><span class="s2">, </span><span class="s0">int </span><span class="s1">row</span><span class="s2">)</span>
+    <span class="s2">{</span>
+        <span class="s0">if </span><span class="s2">(</span><span class="s1">isGameOver</span><span class="s2">())</span>
+        <span class="s2">{</span>
+            <span class="s0">return false</span><span class="s2">;</span>
+        <span class="s2">}</span>
+
+        <span class="s0">if </span><span class="s2">(</span><span class="s1">col </span><span class="s2">&lt; </span><span class="s5">0 </span><span class="s2">|| </span><span class="s1">col </span><span class="s2">&gt; </span><span class="s5">2 </span><span class="s2">|| </span><span class="s1">row </span><span class="s2">&lt; </span><span class="s5">0 </span><span class="s2">|| </span><span class="s1">row </span><span class="s2">&gt; </span><span class="s5">2 </span><span class="s2">|| </span><span class="s1">board</span><span class="s2">[</span><span class="s1">col</span><span class="s2">][</span><span class="s1">row</span><span class="s2">] != -</span><span class="s5">1</span><span class="s2">)</span>
+        <span class="s2">{</span>
+            <span class="s0">return false</span><span class="s2">;</span>
+        <span class="s2">}</span>
+
+        <span class="s1">board</span><span class="s2">[</span><span class="s1">col</span><span class="s2">][</span><span class="s1">row</span><span class="s2">] = </span><span class="s1">currentPlayer</span><span class="s2">;</span>
+        <span class="s1">movesCount</span><span class="s2">++;</span>
+
+        <span class="s1">checkGameStatus</span><span class="s2">();</span>
+
+        <span class="s0">if </span><span class="s2">(</span><span class="s1">currentPlayer </span><span class="s2">== </span><span class="s5">0</span><span class="s2">)</span>
+        <span class="s2">{</span>
+            <span class="s1">currentPlayer </span><span class="s2">= </span><span class="s5">1</span><span class="s2">;</span>
+        <span class="s2">}</span>
+        <span class="s0">else</span>
+        <span class="s2">{</span>
+            <span class="s1">currentPlayer </span><span class="s2">= </span><span class="s5">0</span><span class="s2">;</span>
+        <span class="s2">}</span>
+
+        <span class="s0">return true</span><span class="s2">;</span>
+    <span class="s2">}</span>
+
+    <span class="s3">/**</span>
+     <span class="s3">* Tells us if the game has ended either by draw or by meeting the winning</span>
+     <span class="s3">* condition.</span>
+     <span class="s3">*</span>
+     <span class="s3">* </span><span class="s4">@return </span><span class="s3">true if the game is over, else it will retun false.</span>
+     <span class="s3">*/</span>
+    <span class="s0">public boolean </span><span class="s1">isGameOver</span><span class="s2">()</span>
+    <span class="s2">{</span>
+        <span class="s0">return </span><span class="s1">winner </span><span class="s2">!= -</span><span class="s5">1 </span><span class="s2">|| </span><span class="s1">movesCount </span><span class="s2">== </span><span class="s5">9</span><span class="s2">;</span>
+    <span class="s2">}</span>
+
+    <span class="s3">/**</span>
+     <span class="s3">* Gets the id of the winner, -1 if its a draw.</span>
+     <span class="s3">*</span>
+     <span class="s3">* </span><span class="s4">@return </span><span class="s3">int id of winner, or -1 if draw.</span>
+     <span class="s3">*/</span>
+    <span class="s0">public int </span><span class="s1">getWinner</span><span class="s2">()</span>
+    <span class="s2">{</span>
+        <span class="s0">return </span><span class="s1">winner</span><span class="s2">;</span>
+    <span class="s2">}</span>
+
+    <span class="s3">/**</span>
+     <span class="s3">* Resets the game to a new game state.</span>
+     <span class="s3">*/</span>
+    <span class="s0">public void </span><span class="s1">newGame</span><span class="s2">()</span>
+    <span class="s2">{</span>
+        <span class="s0">for </span><span class="s2">(</span><span class="s0">int </span><span class="s1">c </span><span class="s2">= </span><span class="s5">0</span><span class="s2">; </span><span class="s1">c </span><span class="s2">&lt; </span><span class="s5">3</span><span class="s2">; </span><span class="s1">c</span><span class="s2">++)</span>
+        <span class="s2">{</span>
+            <span class="s0">for </span><span class="s2">(</span><span class="s0">int </span><span class="s1">r </span><span class="s2">= </span><span class="s5">0</span><span class="s2">; </span><span class="s1">r </span><span class="s2">&lt; </span><span class="s5">3</span><span class="s2">; </span><span class="s1">r</span><span class="s2">++)</span>
+            <span class="s2">{</span>
+                <span class="s1">board</span><span class="s2">[</span><span class="s1">c</span><span class="s2">][</span><span class="s1">r</span><span class="s2">] = -</span><span class="s5">1</span><span class="s2">;</span>
+            <span class="s2">}</span>
+        <span class="s2">}</span>
+        <span class="s1">currentPlayer </span><span class="s2">= </span><span class="s5">0</span><span class="s2">;</span>
+        <span class="s1">winner </span><span class="s2">= -</span><span class="s5">1</span><span class="s2">;</span>
+        <span class="s1">movesCount </span><span class="s2">= </span><span class="s5">0</span><span class="s2">;</span>
+    <span class="s2">}</span>
+
+    <span class="s0">private void </span><span class="s1">checkGameStatus</span><span class="s2">()</span>
+    <span class="s2">{</span>
+        <span class="s0">for </span><span class="s2">(</span><span class="s0">int </span><span class="s1">c </span><span class="s2">= </span><span class="s5">0</span><span class="s2">; </span><span class="s1">c </span><span class="s2">&lt; </span><span class="s5">3</span><span class="s2">; </span><span class="s1">c</span><span class="s2">++)</span>
+        <span class="s2">{</span>
+            <span class="s0">if </span><span class="s2">(</span><span class="s1">board</span><span class="s2">[</span><span class="s1">c</span><span class="s2">][</span><span class="s5">0</span><span class="s2">] != -</span><span class="s5">1 </span><span class="s2">&amp;&amp; </span><span class="s1">board</span><span class="s2">[</span><span class="s1">c</span><span class="s2">][</span><span class="s5">0</span><span class="s2">] == </span><span class="s1">board</span><span class="s2">[</span><span class="s1">c</span><span class="s2">][</span><span class="s5">1</span><span class="s2">] &amp;&amp; </span><span class="s1">board</span><span class="s2">[</span><span class="s1">c</span><span class="s2">][</span><span class="s5">1</span><span class="s2">] == </span><span class="s1">board</span><span class="s2">[</span><span class="s1">c</span><span class="s2">][</span><span class="s5">2</span><span class="s2">])</span>
+            <span class="s2">{</span>
+                <span class="s1">winner </span><span class="s2">= </span><span class="s1">board</span><span class="s2">[</span><span class="s1">c</span><span class="s2">][</span><span class="s5">0</span><span class="s2">];</span>
+                <span class="s0">return</span><span class="s2">;</span>
+            <span class="s2">}</span>
+        <span class="s2">}</span>
+
+        <span class="s0">for </span><span class="s2">(</span><span class="s0">int </span><span class="s1">r </span><span class="s2">= </span><span class="s5">0</span><span class="s2">; </span><span class="s1">r </span><span class="s2">&lt; </span><span class="s5">3</span><span class="s2">; </span><span class="s1">r</span><span class="s2">++)</span>
+        <span class="s2">{</span>
+            <span class="s0">if </span><span class="s2">(</span><span class="s1">board</span><span class="s2">[</span><span class="s5">0</span><span class="s2">][</span><span class="s1">r</span><span class="s2">] != -</span><span class="s5">1 </span><span class="s2">&amp;&amp; </span><span class="s1">board</span><span class="s2">[</span><span class="s5">0</span><span class="s2">][</span><span class="s1">r</span><span class="s2">] == </span><span class="s1">board</span><span class="s2">[</span><span class="s5">1</span><span class="s2">][</span><span class="s1">r</span><span class="s2">] &amp;&amp; </span><span class="s1">board</span><span class="s2">[</span><span class="s5">1</span><span class="s2">][</span><span class="s1">r</span><span class="s2">] == </span><span class="s1">board</span><span class="s2">[</span><span class="s5">2</span><span class="s2">][</span><span class="s1">r</span><span class="s2">])</span>
+            <span class="s2">{</span>
+                <span class="s1">winner </span><span class="s2">= </span><span class="s1">board</span><span class="s2">[</span><span class="s5">0</span><span class="s2">][</span><span class="s1">r</span><span class="s2">];</span>
+                <span class="s0">return</span><span class="s2">;</span>
+            <span class="s2">}</span>
+        <span class="s2">}</span>
+
+        <span class="s0">if </span><span class="s2">(</span><span class="s1">board</span><span class="s2">[</span><span class="s5">0</span><span class="s2">][</span><span class="s5">0</span><span class="s2">] != -</span><span class="s5">1 </span><span class="s2">&amp;&amp; </span><span class="s1">board</span><span class="s2">[</span><span class="s5">0</span><span class="s2">][</span><span class="s5">0</span><span class="s2">] == </span><span class="s1">board</span><span class="s2">[</span><span class="s5">1</span><span class="s2">][</span><span class="s5">1</span><span class="s2">] &amp;&amp; </span><span class="s1">board</span><span class="s2">[</span><span class="s5">1</span><span class="s2">][</span><span class="s5">1</span><span class="s2">] == </span><span class="s1">board</span><span class="s2">[</span><span class="s5">2</span><span class="s2">][</span><span class="s5">2</span><span class="s2">])</span>
+        <span class="s2">{</span>
+            <span class="s1">winner </span><span class="s2">= </span><span class="s1">board</span><span class="s2">[</span><span class="s5">0</span><span class="s2">][</span><span class="s5">0</span><span class="s2">];</span>
+            <span class="s0">return</span><span class="s2">;</span>
+        <span class="s2">}</span>
+
+        <span class="s0">if </span><span class="s2">(</span><span class="s1">board</span><span class="s2">[</span><span class="s5">0</span><span class="s2">][</span><span class="s5">2</span><span class="s2">] != -</span><span class="s5">1 </span><span class="s2">&amp;&amp; </span><span class="s1">board</span><span class="s2">[</span><span class="s5">0</span><span class="s2">][</span><span class="s5">2</span><span class="s2">] == </span><span class="s1">board</span><span class="s2">[</span><span class="s5">1</span><span class="s2">][</span><span class="s5">1</span><span class="s2">] &amp;&amp; </span><span class="s1">board</span><span class="s2">[</span><span class="s5">1</span><span class="s2">][</span><span class="s5">1</span><span class="s2">] == </span><span class="s1">board</span><span class="s2">[</span><span class="s5">2</span><span class="s2">][</span><span class="s5">0</span><span class="s2">])</span>
+        <span class="s2">{</span>
+            <span class="s1">winner </span><span class="s2">= </span><span class="s1">board</span><span class="s2">[</span><span class="s5">0</span><span class="s2">][</span><span class="s5">2</span><span class="s2">];</span>
+        <span class="s2">}</span>
+    <span class="s2">}</span>
+<span class="s2">}</span></pre>
+</body>
+</html>
