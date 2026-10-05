@@ -111,13 +111,13 @@ public class GameBoard implements IGameBoard {
 
         if (board[0][0] != -1 && board[0][0] == board[1][1] && board[1][1] == board[2][2]) {
             winner = board[0][0];
-            winningLineType = "DIAG_MAIN";
+            winningLineType = "DIAG_SUB";
             return;
         }
 
         if (board[0][2] != -1 && board[0][2] == board[1][1] && board[1][1] == board[2][0]) {
             winner = board[0][2];
-            winningLineType = "DIAG_SUB";
+            winningLineType = "DIAG_MAIN";
         }
     }
 }

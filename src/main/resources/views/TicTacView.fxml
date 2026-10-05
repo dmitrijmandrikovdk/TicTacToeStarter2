@@ -6,6 +6,7 @@
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
@@ -51,6 +52,12 @@
                   <Insets left="64.0" />
                </GridPane.margin>
             </Line>
+            <Pane mouseTransparent="true" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
+               <children>
+                  <Line fx:id="lineDiagSub" endX="195.20001220703125" endY="206.19998168945312" layoutX="64.0" layoutY="69.0" mouseTransparent="true" startX="-194.3999786376953" startY="-209.00001525878906" stroke="RED" visible="false" />
+                  <Line fx:id="lineDiagMain" endX="185.0" endY="-219.70713806152344" layoutX="74.0" layoutY="79.0" mouseTransparent="true" startX="-205.10707092285156" startY="196.90707397460938" stroke="RED" visible="false" />
+               </children>
+            </Pane>
          </children>
          <BorderPane.margin>
             <Insets />

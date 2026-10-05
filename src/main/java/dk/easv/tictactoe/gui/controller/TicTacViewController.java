@@ -24,6 +24,12 @@ import javafx.scene.shape.Line;
 public class TicTacViewController implements Initializable
 {
     @FXML
+    public Line lineDiagSub;
+
+    @FXML
+    public Line lineDiagMain;
+
+    @FXML
     private Line line1Row;
 
     @FXML
@@ -155,6 +161,8 @@ public class TicTacViewController implements Initializable
         case "COL_0": lineV1Column.setVisible(true); break;
         case "COL_1": lineV2Column.setVisible(true); break;
         case "COL_2": lineV3Column.setVisible(true); break;
+        case "DIAG_MAIN": lineDiagMain.setVisible(true); break;
+        case "DIAG_SUB": lineDiagSub.setVisible(true); break;
     }
     }
 
@@ -177,5 +185,7 @@ public class TicTacViewController implements Initializable
         if (lineV1Column != null) lineV1Column.setVisible(false);
         if (lineV2Column != null) lineV2Column.setVisible(false);
         if (lineV3Column != null) lineV3Column.setVisible(false);
+        if (lineDiagMain != null) lineDiagMain.setVisible(false);
+        if (lineDiagSub != null) lineDiagSub.setVisible(false);
     }
 }
