@@ -47,7 +47,6 @@ public class GameBoard implements IGameBoard {
         movesCount++;
 
         checkGameStatus();
-//comment
         if (currentPlayer == 0) {
             currentPlayer = 1;
         } else {
