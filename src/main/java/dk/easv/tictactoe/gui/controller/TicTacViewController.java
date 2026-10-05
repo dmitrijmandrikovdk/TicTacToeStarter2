@@ -31,7 +31,7 @@ public class TicTacViewController implements Initializable
     @FXML
     private GridPane gridPane;
     
-    private static final String TXT_PLAYER = "Player: ";
+    private static final String TXT_PLAYER = "Turn of Player: ";
     private IGameBoard game;
 
     /**
@@ -51,18 +51,15 @@ public class TicTacViewController implements Initializable
             int player = game.getNextPlayer();
             if (game.play(c, r))
             {
-                if (game.isGameOver())
-                {
+                Button btn = (Button) event.getSource();
+                String xOrO = player == 0 ? "X" : "O";
+                btn.setText(xOrO);
+                if (game.isGameOver()) {
                     int winner = game.getWinner();
                     displayWinner(winner);
                 }
                 else
-                {
-                    Button btn = (Button) event.getSource();
-                    String xOrO = player == 0 ? "X" : "O";
-                    btn.setText(xOrO);
                     setPlayer();
-                }
             }
         } catch (Exception e)
         {

@@ -95,7 +95,6 @@ public class GameBoard implements IGameBoard {
                 return;
             }
         }
-
         for (int r = 0; r < 3; r++) {
             if (board[0][r] != -1 && board[0][r] == board[1][r] && board[1][r] == board[2][r]) {
                 winner = board[0][r];
