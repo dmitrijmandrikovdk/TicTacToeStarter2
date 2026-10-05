@@ -106,7 +106,8 @@ public class TicTacViewController implements Initializable
      */
     private void setPlayer()
     {
-        lblPlayer.setText(TXT_PLAYER + game.getNextPlayer());
+        String playerSymbol = (game.getNextPlayer() == 0) ? "X" : "O";
+        lblPlayer.setText(TXT_PLAYER + playerSymbol);
     }
 
 
@@ -123,7 +124,8 @@ public class TicTacViewController implements Initializable
                 message = "It's a draw :-(";
                 break;
             default:
-                message = "Player " + winner + " wins!!!";
+                String winnerSymbol = (winner == 0) ? "X" : "O";
+                message = "Player " + winnerSymbol + " wins!!!";
                 break;
         }
         lblPlayer.setText(message);

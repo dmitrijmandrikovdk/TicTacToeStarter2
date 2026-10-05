@@ -47,11 +47,10 @@ public class GameBoard implements IGameBoard {
         movesCount++;
 
         checkGameStatus();
-        if (currentPlayer == 0) {
+        if (currentPlayer == 0)
             currentPlayer = 1;
-        } else {
+        else
             currentPlayer = 0;
-        }
 
         return true;
     }
