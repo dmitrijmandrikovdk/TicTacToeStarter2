@@ -81,7 +81,7 @@
    <bottom>
       <HBox prefHeight="50.0" prefWidth="390.0" BorderPane.alignment="CENTER">
          <children>
-            <Button fx:id="btnMode" mnemonicParsing="false" onAction="#onBtnClick" prefHeight="26.0" prefWidth="134.0" text="AI mode">
+            <Button fx:id="btnMode" mnemonicParsing="false" onAction="#onBtnClick" prefHeight="26.0" prefWidth="134.0" text="2P Mode">
                <HBox.margin>
                   <Insets top="10.0" />
                </HBox.margin>

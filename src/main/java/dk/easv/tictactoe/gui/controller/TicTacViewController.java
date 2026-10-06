@@ -211,13 +211,13 @@ public class TicTacViewController implements Initializable
     }
 
     public void onBtnClick(ActionEvent event) {
-        if (btnMode.getText().equals("AI Mode")) {
-            btnMode.setText("2P Mode");
+        if (btnMode.getText().equals("2P Mode")) {
+            btnMode.setText("AI Mode");
             game.setVsAI(true);
         }
         else
         {
-            btnMode.setText("AI Mode");
+            btnMode.setText("2P Mode");
             game.setVsAI(false);
         }
         clearBoard();
