@@ -30,6 +30,9 @@ public class TicTacViewController implements Initializable
     public Line lineDiagMain;
 
     @FXML
+    public Button btnMode;
+
+    @FXML
     private Line line1Row;
 
     @FXML
@@ -76,9 +79,8 @@ public class TicTacViewController implements Initializable
             int player = game.getNextPlayer();
             if (game.play(c, r))
             {
-                Button btn = (Button) event.getSource();
-                String xOrO = player == 0 ? "X" : "O";
-                btn.setText(xOrO);
+                //moved x or 0 placement to updateboardUI for AI to work
+                updateBoardUI();
                 if (game.isGameOver()) {
                     int winner = game.getWinner();
                     displayWinner(winner);
@@ -137,8 +139,7 @@ public class TicTacViewController implements Initializable
      * Finds a winner or a draw and displays a message based
      * @param winner
      */
-    private void displayWinner(int winner)
-    {
+    private void displayWinner(int winner){
         String message = "";
         switch (winner)
         {
@@ -166,6 +167,26 @@ public class TicTacViewController implements Initializable
     }
     }
 
+    private void updateBoardUI() {
+        int[][] currentBoard = game.getBoard();
+        for (Node n : gridPane.getChildren()) {
+            if (n instanceof Button) {
+                Button btn = (Button) n;
+                Integer rowIndex = GridPane.getRowIndex(btn);
+                Integer colIndex = GridPane.getColumnIndex(btn);
+                int row = (rowIndex == null) ? 0 : rowIndex;
+                int col = (colIndex == null) ? 0 : colIndex;
+
+                int val = currentBoard[col][row];
+                if (val == 0)
+                    btn.setText("X");
+                 else if (val == 1)
+                    btn.setText("O");
+                 else
+                    btn.setText("");
+            }
+        }
+    }
     /**
      * Clears the game board in the GUI
      */
@@ -187,5 +208,19 @@ public class TicTacViewController implements Initializable
         if (lineV3Column != null) lineV3Column.setVisible(false);
         if (lineDiagMain != null) lineDiagMain.setVisible(false);
         if (lineDiagSub != null) lineDiagSub.setVisible(false);
+    }
+
+    public void onBtnClick(ActionEvent event) {
+        if (btnMode.getText().equals("AI Mode")) {
+            btnMode.setText("2P Mode");
+            game.setVsAI(true);
+        }
+        else
+        {
+            btnMode.setText("AI Mode");
+            game.setVsAI(false);
+        }
+        clearBoard();
+        setPlayer();
     }
 }

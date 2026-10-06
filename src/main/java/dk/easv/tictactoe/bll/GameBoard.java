@@ -10,6 +10,9 @@ public class GameBoard implements IGameBoard {
     private int winner;
     private int movesCount;
 
+    private ComputerPlayer aiPlayer = new ComputerPlayer();
+    private boolean isVsAI = false;
+
     public String winningLineType = "";
 
     public String getWinningLineType(){
@@ -20,6 +23,13 @@ public class GameBoard implements IGameBoard {
         newGame();
     }
 
+    public void setVsAI(boolean vsAI) {
+        isVsAI = vsAI;
+        newGame();
+    }
+    public boolean isVsAI() {
+        return isVsAI;
+    }
     /**
      * Returns 0 for player 0, 1 for player 1.
      *
@@ -56,6 +66,20 @@ public class GameBoard implements IGameBoard {
             currentPlayer = 1;
         else
             currentPlayer = 0;
+
+        if (isVsAI && !isGameOver() && currentPlayer == 1) {
+            int[] aiMove = aiPlayer.getBestMove(board);
+            if (aiMove != null) {
+                int aiCol = aiMove[0];
+                int aiRow = aiMove[1];
+
+                board[aiCol][aiRow] = currentPlayer;
+                movesCount++;
+
+                checkGameStatus();
+                currentPlayer = 0;
+            }
+        }
 
         return true;
     }
@@ -119,5 +143,8 @@ public class GameBoard implements IGameBoard {
             winner = board[0][2];
             winningLineType = "DIAG_MAIN";
         }
+    }
+    public int[][] getBoard(){
+        return board;
     }
 }
